@@ -3,6 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+//This is the badge class depicted in the supplemental video
+
+
 package edu.jsu.mcis.cs310.tas_sp21;
 
 public class Badge {
