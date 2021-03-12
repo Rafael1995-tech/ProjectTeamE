@@ -3,36 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-//This is the badge class depicted in the supplemental video
-
-
 package edu.jsu.mcis.cs310.tas_sp21;
 
-public class Badge {
-    
-  String id;
+/**
+ *
+ * @author jaydoan
+ */
+public class PunchType {
+    int id;
 
-   String description;
+    String description;
 
-    public Badge(String id, String description) {
+    public PunchType(int id, String description) {
         this.id = id;
         this.description = description;
     }
 
-    public Badge(String id) {
-        this.id = id;
+    public PunchType(String description) {
+        this.description = description;
     }
 
-    public Badge() {
-
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -43,11 +38,4 @@ public class Badge {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @Override
-    public String toString() {
-        return "#" + id + " (" + description + ")";
-    }
-
-    
 }

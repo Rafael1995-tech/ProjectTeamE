@@ -1,5 +1,7 @@
 package edu.jsu.mcis.cs310.tas_sp21;
 
+import java.sql.Timestamp;
+
 public class Shift {
 
     //There should also be " getShift() " methods
@@ -8,86 +10,120 @@ public class Shift {
     //Shift table as separate values, use the HOUR() and MINUTE() functions of MySQL.
     //"Shift Start” and “Shift Stop"
     //“Lunch Start” and “Lunch Stop” 
-    private String shift;
-    private String id;
-    private String description;    
-    private int start;
-    private int stop;
-    private int interval;
-    private int graceperiod;
-    private int dock;
-    private int lunchstart;
-    private int lunchstop;
-    private int lunchduration;
-    private int lunchdeduct;
+    int id;
 
-    public Shift(String id, String description, int start, int stop, int interval, int graceperiod, int dock, int lunchstart, int lunchstop, int lunchdeduct) {
-        this.shift = shift;
-        this.id = id;
-        this.description = description;
-        this.start = start;
-        this.stop = stop;
-        this.interval = interval;
-        this.graceperiod = graceperiod;
-        this.dock = dock;
-        this.lunchstart = lunchstart;
-        this.lunchstop = lunchstop;
-        this.lunchdeduct = lunchdeduct;
-    }
+    String description;
 
-        public String getShift() {
-            //long startTime = "";
-            //long stopTime = "";
-        return shift;
-    }
-    public String getId() {
+    Timestamp start;
+
+    Timestamp stop;
+
+    int interval;
+
+    int gracePeriod;
+
+    int dock;
+
+    Timestamp lunchStart;
+
+    Timestamp lunchStop;
+
+    int lunchDeduct;
+
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public int getStart() {
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Timestamp getStart() {
         return start;
     }
 
-    public int getStop() {
+    public void setStart(Timestamp start) {
+        this.start = start;
+    }
+
+    public Timestamp getStop() {
         return stop;
+    }
+
+    public void setStop(Timestamp stop) {
+        this.stop = stop;
     }
 
     public int getInterval() {
         return interval;
     }
 
-    public int getGraceperiod() {
-        return graceperiod;
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+
+    public int getGracePeriod() {
+        return gracePeriod;
+    }
+
+    public void setGracePeriod(int gracePeriod) {
+        this.gracePeriod = gracePeriod;
     }
 
     public int getDock() {
         return dock;
     }
 
-    public int getLunchstart() {
-        return lunchstart;
+    public void setDock(int dock) {
+        this.dock = dock;
     }
 
-    public int getLunchstop() {
-        return lunchstop;
+    public Timestamp getLunchStart() {
+        return lunchStart;
     }
 
-    public int getLunchdeduct() {
-        return lunchdeduct;
+    public void setLunchStart(Timestamp lunchStart) {
+        this.lunchStart = lunchStart;
     }
-    
+
+    public Timestamp getLunchStop() {
+        return lunchStop;
+    }
+
+    public void setLunchStop(Timestamp lunchStop) {
+        this.lunchStop = lunchStop;
+    }
+
+    public int getLunchDeduct() {
+        return lunchDeduct;
+    }
+
+    public void setLunchDeduct(int lunchDeduct) {
+        this.lunchDeduct = lunchDeduct;
+    }
+
     @Override
     public String toString() {
-        //"#07901755, (Terrell, Kenneth R)"
-        StringBuilder s = new StringBuilder();
-        s.append("#").append(id).append(" ");
-        s.append("(").append(description).append(")");
-        
-        return ( s.toString() );
+        return description + ": " + DateTimeUtils.convertTimestampToString(start)
+                + " - "
+                + DateTimeUtils.convertTimestampToString(stop)
+                + " ("
+                + DateTimeUtils.timeStampDifference(start, stop)
+                + " minutes); Lunch: "
+                + DateTimeUtils.convertTimestampToString(lunchStart)
+                + " - "
+                + DateTimeUtils.convertTimestampToString(lunchStop)
+                + " ("
+                + DateTimeUtils.timeStampDifference(lunchStart, lunchStop)
+                + " minutes)";
     }
 
 }
