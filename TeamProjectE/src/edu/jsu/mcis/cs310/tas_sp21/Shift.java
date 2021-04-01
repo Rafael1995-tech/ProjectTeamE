@@ -97,6 +97,27 @@ public class Shift {
     public long getLunchDuration() {
         return lunchDuration;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLunchStart(LocalTime lunchStart) {
+        this.lunchStart = lunchStart;
+    }
+
+    public void setLunchStop(LocalTime lunchStop) {
+        this.lunchStop = lunchStop;
+    }
+
+    public void setStart(LocalTime start) {
+        this.start = start;
+    }
+
+    public void setStop(LocalTime stop) {
+        this.stop = stop;
+    }
+    
 @Override
  public String toString() {
         
