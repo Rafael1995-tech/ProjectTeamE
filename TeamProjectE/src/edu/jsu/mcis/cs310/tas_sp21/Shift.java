@@ -5,7 +5,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import java.sql.Timestamp;
 
 public class Shift {
-
+//Testing
     //There should also be " getShift() " methods
     //UNIX_TIMESTAMP()
     //To retrieve the hours and minutes from the TIME fields of the 
