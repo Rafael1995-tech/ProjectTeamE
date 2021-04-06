@@ -13,7 +13,7 @@ public class Shift {
     //"Shift Start” and “Shift Stop"
     //“Lunch Start” and “Lunch Stop” 
     private String shift;
-    private String id;
+    private int id;
     private String description;    
     
     private int interval;
@@ -29,18 +29,14 @@ public class Shift {
     private LocalTime stop;
     
 
-    public Shift(String id, String description, LocalTime start, LocalTime stop, int interval, int graceperiod, int dock, int lunchstart, int lunchstop, int lunchdeduct) {
+    public Shift(int id, String description, String start, String stop, int interval, int graceperiod, int dock, LocalTime lunchstart, LocalTime lunchstop, int lunchdeduct) {
         
-        int starthour = 7;  // delete later!
-        int startminute = 0; // delete later!
         
-        this.start = LocalTime.of(starthour, startminute);
-        
-        this.shift = shift;
+        //this.shift = shift;
         this.id = id;
         this.description = description;
-        this.start = start;
-        this.stop = stop;
+        this.start = LocalTime.parse(start);
+        this.stop = LocalTime.parse(stop);
         this.interval = interval;
         this.gracePeriod = graceperiod;
         this.dock = dock;
@@ -48,10 +44,10 @@ public class Shift {
         this.lunchStop = lunchStop;
         this.lunchDeduct = lunchDeduct;
         this.lunchDuration = MINUTES.between(lunchStart, lunchStop);
-        this.shiftDuration = MINUTES.between(start, stop);
+        //this.shiftDuration = MINUTES.between(start, stop);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
