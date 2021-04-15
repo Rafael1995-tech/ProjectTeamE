@@ -7,7 +7,10 @@ package edu.jsu.mcis.cs310.tas_sp21;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.sql.Time;
 
 /**
  *
@@ -15,41 +18,61 @@ import java.time.format.DateTimeFormatter;
  */
 public class DateTimeUtils {
     public static final String DATE_TIME_PATTERN = "MM/dd/yyyy HH:mm:ss";
-    public static final String DB_TIME_PATTERN = "HH:mm:ss";
-    public static final String TIME_PATTERN = "HH:mm";
+    public static final String DATE_PATTERN = "MM/dd/yyyy";
+    public static final String DB_DATE_PATTERN = "yyyy-MM-dd";
+    public static final String DAYOFWEEK_PATTERN = "EEEE";
 
     public static String convertTimestampToDateTimeString(Timestamp timestamp) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
         return timestamp.toLocalDateTime().format(formatter);
     }
 
-    public static String convertTimestampToString(Timestamp timestamp) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_PATTERN);
+    public static String convertTimestampToDateString(Timestamp timestamp) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
         return timestamp.toLocalDateTime().format(formatter);
     }
 
+    public static String convertTimeToString(Time time) {
+        return time.toString().substring(0,5);
+    }
+
     public static String getDayOfWeekFromTimestamp(Timestamp timestamp) {
-        String day = (new SimpleDateFormat("EEEE")).format(timestamp.getTime());
+        String dayOfWeek = (new SimpleDateFormat(DAYOFWEEK_PATTERN)).format(timestamp.getTime());
 
-        return (new SimpleDateFormat("EEEE")).format(timestamp.getTime()).substring(0,3).toUpperCase();
+        return dayOfWeek.substring(0,3).toUpperCase();
     }
 
-//    public static Timestamp convertStringToTimestamp(String localTime) {
-//        try {
-//            DateFormat formatter = new SimpleDateFormat(DB_TIME_PATTERN);
-//            Date date = (Date) formatter.parse(DB_TIME_PATTERN);
-//            Timestamp timeStampDate = new Timestamp(date.getTime());
-//
-//            return timeStampDate;
-//        } catch (ParseException e) {
-//            System.out.println("Exception :" + e);
-//            return null;
-//        }
-//    }
-
-    public static long timeStampDifference(Timestamp startTime, Timestamp stopTime) {
-
-        return (stopTime.getTime() - startTime.getTime()) / (60 * 1000);
+    public static Time getTimeFromTimestamp(Timestamp timestamp) {
+        Time time = new Time(timestamp.getTime());
+        return time;
     }
-    
+
+    public static long timeDifference(Time startTime, Time stopTime) {
+        Duration d = Duration.between(startTime.toLocalTime(), stopTime.toLocalTime());
+
+        return d.toMinutes();
+    }
+
+    public static String convertMilliSecondsToFormattedDate(long milliSeconds){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DB_DATE_PATTERN);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    public static Time roundTimeNearestInterval(Time time, int interval) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(time);
+        if (calendar.get(Calendar.SECOND) >= 30) {
+            calendar.add(Calendar.MINUTE, 1);
+        }
+
+        int unroundedMinutes = calendar.get(Calendar.MINUTE);
+        int mod = unroundedMinutes % interval;
+        calendar.add(Calendar.MINUTE, mod < (interval/2 + 1) ? -mod : (interval-mod));
+        calendar.set(Calendar.SECOND, 0);
+        Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
+
+        return getTimeFromTimestamp(timestamp);
+    }
 }

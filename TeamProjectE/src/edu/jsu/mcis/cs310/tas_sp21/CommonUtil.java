@@ -18,6 +18,14 @@ public class CommonUtil {
     public static final String CLOCKED_OUT = "CLOCKED OUT";
     public static final String TIMED_OUT = "TIMED OUT";
 
+    public static final String SHIFT_START = "Shift Start";
+    public static final String SHIFT_STOP = "Shift Stop";
+    public static final String LUNCH_START = "Lunch Start";
+    public static final String LUNCH_STOP = "Lunch Stop";
+    public static final String SHIFT_DOCK = "Shift Dock";
+    public static final String INTERVAL_ROUND = "Interval Round";
+    public static final String NONE = "None";
+
     public static String convertPunchTypeByDescription(String description) {
         String des = "";
         switch (description) {

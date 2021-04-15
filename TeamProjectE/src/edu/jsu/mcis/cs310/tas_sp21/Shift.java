@@ -1,32 +1,19 @@
 package edu.jsu.mcis.cs310.tas_sp21;
 
 import java.sql.Timestamp;
+import java.sql.Time;
 
 public class Shift {
-
-    //There should also be " getShift() " methods
-    //UNIX_TIMESTAMP()
-    //To retrieve the hours and minutes from the TIME fields of the 
-    //Shift table as separate values, use the HOUR() and MINUTE() functions of MySQL.
-    //"Shift Start” and “Shift Stop"
-    //“Lunch Start” and “Lunch Stop” 
     int id;
-
     String description;
-
-    Timestamp start;
-
-    Timestamp stop;
-
     int interval;
-
     int gracePeriod;
-
     int dock;
 
-    Timestamp lunchStart;
-
-    Timestamp lunchStop;
+    Time start;
+    Time stop;
+    Time lunchStart;
+    Time lunchStop;
 
     int lunchDeduct;
 
@@ -46,19 +33,19 @@ public class Shift {
         this.description = description;
     }
 
-    public Timestamp getStart() {
+    public Time getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(Time start) {
         this.start = start;
     }
 
-    public Timestamp getStop() {
+    public Time getStop() {
         return stop;
     }
 
-    public void setStop(Timestamp stop) {
+    public void setStop(Time stop) {
         this.stop = stop;
     }
 
@@ -86,19 +73,19 @@ public class Shift {
         this.dock = dock;
     }
 
-    public Timestamp getLunchStart() {
+    public Time getLunchStart() {
         return lunchStart;
     }
 
-    public void setLunchStart(Timestamp lunchStart) {
+    public void setLunchStart(Time lunchStart) {
         this.lunchStart = lunchStart;
     }
 
-    public Timestamp getLunchStop() {
+    public Time getLunchStop() {
         return lunchStop;
     }
 
-    public void setLunchStop(Timestamp lunchStop) {
+    public void setLunchStop(Time lunchStop) {
         this.lunchStop = lunchStop;
     }
 
@@ -112,18 +99,17 @@ public class Shift {
 
     @Override
     public String toString() {
-        return description + ": " + DateTimeUtils.convertTimestampToString(start)
+        return description + ": " + DateTimeUtils.convertTimeToString(start)
                 + " - "
-                + DateTimeUtils.convertTimestampToString(stop)
+                + DateTimeUtils.convertTimeToString(stop)
                 + " ("
-                + DateTimeUtils.timeStampDifference(start, stop)
+                + DateTimeUtils.timeDifference(start, stop)
                 + " minutes); Lunch: "
-                + DateTimeUtils.convertTimestampToString(lunchStart)
+                + DateTimeUtils.convertTimeToString(lunchStart)
                 + " - "
-                + DateTimeUtils.convertTimestampToString(lunchStop)
+                + DateTimeUtils.convertTimeToString(lunchStop)
                 + " ("
-                + DateTimeUtils.timeStampDifference(lunchStart, lunchStop)
+                + DateTimeUtils.timeDifference(lunchStart, lunchStop)
                 + " minutes)";
     }
-
 }

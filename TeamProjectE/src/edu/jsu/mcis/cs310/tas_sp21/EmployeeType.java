@@ -9,19 +9,10 @@ package edu.jsu.mcis.cs310.tas_sp21;
  *
  * @author jaydoan
  */
-public class PunchType {
-    int id;
+public class EmployeeType {
+     int id;
 
     String description;
-
-    public PunchType(int id, String description) {
-        this.id = id;
-        this.description = description;
-    }
-
-    public PunchType(String description) {
-        this.description = description;
-    }
 
     public int getId() {
         return id;
@@ -38,4 +29,5 @@ public class PunchType {
     public void setDescription(String description) {
         this.description = description;
     }
+    
 }
