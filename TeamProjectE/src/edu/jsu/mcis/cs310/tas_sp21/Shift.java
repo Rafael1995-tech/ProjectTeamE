@@ -1,5 +1,7 @@
 package edu.jsu.mcis.cs310.tas_sp21;
+import java.time.LocalTime;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
 import java.sql.Timestamp;
 import java.sql.Time;
 
