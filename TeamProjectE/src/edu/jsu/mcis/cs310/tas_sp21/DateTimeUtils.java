@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.sql.Time;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -20,6 +21,7 @@ public class DateTimeUtils {
     public static final String DATE_TIME_PATTERN = "MM/dd/yyyy HH:mm:ss";
     public static final String DATE_PATTERN = "MM/dd/yyyy";
     public static final String DB_DATE_PATTERN = "yyyy-MM-dd";
+    public static final String DB_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     public static final String DAYOFWEEK_PATTERN = "EEEE";
 
     public static String convertTimestampToDateTimeString(Timestamp timestamp) {
@@ -74,5 +76,15 @@ public class DateTimeUtils {
         Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
 
         return getTimeFromTimestamp(timestamp);
+    }
+
+    public static String convertTimestampToString(Timestamp timestamp){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DB_DATE_PATTERN);
+        return timestamp.toLocalDateTime().format(formatter).toString();
+    }
+
+    public static Timestamp convertStringToTimestamp(String timeString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DB_DATE_TIME_PATTERN);
+        return Timestamp.valueOf(LocalDateTime.parse(timeString, formatter));
     }
 }

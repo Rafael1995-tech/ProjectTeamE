@@ -204,4 +204,64 @@ public class TASLogic {
 
         return timeFirst;
     }
+
+    public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift){
+        long total = 0;
+        int sizePunch = dailypunchlist.size();
+
+        if (sizePunch <= 1) {
+            total = 0;
+        } else if (sizePunch == 2) {
+            LocalTime timeClockOut = dailypunchlist.get(1).getTimestamp().toLocalDateTime().toLocalTime();
+            LocalTime timeClockIn = dailypunchlist.get(0).getTimestamp().toLocalDateTime().toLocalTime();
+            total = DateTimeUtils.timeDifference(dailypunchlist.get(0).getAdjustedtimestamp(), dailypunchlist.get(1).getAdjustedtimestamp());
+            if (timeClockIn.isBefore(shift.getLunchStart().toLocalTime())
+                    && timeClockOut.isAfter(shift.getLunchStop().toLocalTime())) {
+                total -= DateTimeUtils.timeDifference(shift.getLunchStart(), shift.getLunchStop());
+            }
+        } else if (sizePunch >= 3) {
+            Time timeClockOut = null;
+            Time timeClockIn = null;
+
+            for (Punch punch : dailypunchlist) {
+                if (punch.getPunchtypeid() == 1) {
+                    timeClockIn =  punch.getAdjustedtimestamp();
+                }
+                if (punch.getPunchtypeid() == 0) {
+                    timeClockOut =  punch.getAdjustedtimestamp();
+                    total += DateTimeUtils.timeDifference(timeClockIn, timeClockOut);
+                }
+            }
+        }
+
+        return (int) total;
+    }
+
+    public static String getPunchListAsJSON(ArrayList<Punch> dailypunchlist) {
+        String stringJson = "[";
+        int sizePunch = dailypunchlist.size();
+
+        for (int i = 0; i < sizePunch; i++) {
+            String adjustedTimestampString = DateTimeUtils.convertTimestampToString(dailypunchlist.get(i).getTimestamp());
+            adjustedTimestampString += " " + dailypunchlist.get(i).getAdjustedtimestamp();
+            Timestamp adjustedTimestamp = DateTimeUtils.convertStringToTimestamp(adjustedTimestampString);
+
+            stringJson += "{\"punchdata\":\"" + dailypunchlist.get(i).getAdjustmenttype()
+                    + "\",\"originaltimestamp\":\"" + dailypunchlist.get(i).getOriginaltimestamp() + "\",\""
+                    + "badgeid\":\"" + dailypunchlist.get(i).getBadgeid() + "\",\"" +
+                    "adjustedtimestamp\":\"" + adjustedTimestamp.getTime() + "\",\"" +
+                    "punchtypeid\":\"" + dailypunchlist.get(i).getPunchtypeid() + "\",\"" +
+                    "terminalid\":\"" + dailypunchlist.get(i).getTerminalid() + "\",\"" +
+                    "id\":\"" + dailypunchlist.get(i).getId() + "\"}";
+
+            if (i >= 0 && sizePunch > 1 && i < sizePunch - 1){
+                stringJson += ",";
+            }
+        }
+
+        stringJson += "]";
+
+        return stringJson;
+    }
 }
+
